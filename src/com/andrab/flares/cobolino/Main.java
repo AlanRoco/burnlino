@@ -5,9 +5,6 @@ import java.io.PrintStream;
 class CliApp {
     private ForCalculatingPrices hex;
 
-    private int precio;
-    private int tasa;
-
     public CliApp(ForCalculatingPrices hex) {
         this.hex = hex;
     }
@@ -26,22 +23,29 @@ class CliApp {
     }
 
     private void parsear() {
+        String reporte = "";
+
         while (hayMas()) {
             if (donde == 1) {
                 String functionName = args[donde];
 
                 if (functionName.equals("echoValue")) {
-                    precio = Integer.parseInt(args[++donde]);
-
-                    decir(String.format("El precio es %.2f dólares", (float) hex.echoValue(precio)));
+                    int precio = Integer.parseInt(args[++donde]);
+                    reporte = String.format("El precio es %.2f dólares", (float) hex.echoValue(precio));
                 } else if (functionName.equals("getTaxRateForState")) {
                     String state = args[++donde];
-                    decir(String.format("La tasa de impuesto es %.2f por ciento.", hex.getTaxRateForState(state)));
+                    reporte = String.format("La tasa de impuesto es %.2f por ciento.", hex.getTaxRateForState(state));
+                } else if (functionName.equals("calculatePriceWithTax")) {
+                    int precio = Integer.parseInt(args[++donde]);
+                    String state = args[++donde];
+                    reporte = String.format("El precio con la tasa de impuesto es %.2f dólares", hex.calculatePriceWithTax(precio, state));
                 }
             }
 
             donde++;
         }
+
+        decir(reporte);
     }
 
     private boolean hayMas() {
