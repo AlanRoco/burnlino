@@ -1,12 +1,13 @@
 package com.andrab.flares.cobolino;
 
 interface ForCalculatingPrices {
-    public int echoValue(int value);
-    public double getTaxForState(String state);
+    int echoValue(int value);
+    double getTaxRateForState(String state);
+    double calculatePriceWithTax(int value, String state);
 }
 
 interface ForGettingTaxRates {
-    public double taxForState(String state);
+    double taxRateForState(String state);
 }
 
 public class PriceMaker implements ForCalculatingPrices {
@@ -21,7 +22,16 @@ public class PriceMaker implements ForCalculatingPrices {
         return value;
     }
 
-    public double getTaxForState(String state) {
-        return taxStore.taxForState(state);
+    public double getTaxRateForState(String state) {
+        return taxStore.taxRateForState(state);
+    }
+
+    public double calculatePriceWithTax(int value, String state) {
+        double taxRate = getTaxRateForState(state) / 100;
+        double taxAmount = value * taxRate;
+
+        double price = value + taxAmount;
+
+        return price;
     }
 }

@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import org.junit.Test;
 
 class InMemoryTaxStore implements ForGettingTaxRates {
-    public double taxForState(String state) {
+    public double taxRateForState(String state) {
         return 6.85;
     }
 }
@@ -24,7 +24,16 @@ public class PriceMakerTests {
         PriceMaker app = new PriceMaker();
         app.setTaxStore(new InMemoryTaxStore());
 
-        double tax = app.getTaxForState("FL");
+        double tax = app.getTaxRateForState("FL");
         assertThat(String.format("%.2f", tax), is(equalTo("6.85")));
+    }
+
+    @Test
+    public void ShouldAddTaxToValue() {
+        PriceMaker app = new PriceMaker();
+        app.setTaxStore(new InMemoryTaxStore());
+
+        double price = app.calculatePriceWithTax(100, "FL");
+        assertThat(String.format("%.2f", price), is(equalTo("106.85")));
     }
 }
