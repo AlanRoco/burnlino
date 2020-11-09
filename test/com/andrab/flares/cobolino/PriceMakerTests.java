@@ -6,12 +6,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.Test;
 
-class InMemoryTaxStore implements ForGettingTaxRates {
-    public double taxRateForState(String state) {
-        return 6.85;
-    }
-}
-
 public class PriceMakerTests {
     @Test
     public void ShouldEchoValue() {

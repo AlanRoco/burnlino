@@ -27,10 +27,17 @@ class CliApp {
 
     private void parsear() {
         while (hayMas()) {
-            if (donde == 1 && args[donde].equals("echoValue")) {
-                precio = Integer.parseInt(args[++donde]);
+            if (donde == 1) {
+                String functionName = args[donde];
 
-                decir(String.format("El precio es %.2f dólares", (float) hex.echoValue(precio)));
+                if (functionName.equals("echoValue")) {
+                    precio = Integer.parseInt(args[++donde]);
+
+                    decir(String.format("El precio es %.2f dólares", (float) hex.echoValue(precio)));
+                } else if (functionName.equals("getTaxRateForState")) {
+                    String state = args[++donde];
+                    decir(String.format("La tasa de impuesto es %.2f por ciento.", hex.getTaxRateForState(state)));
+                }
             }
 
             donde++;
@@ -53,7 +60,10 @@ class CliApp {
 
 public class Main {
     public static void main(String... args) {
-        CliApp ui = new CliApp(new PriceMaker());
+        PriceMaker hex = new PriceMaker();
+        hex.setTaxStore(new InMemoryTaxStore());
+
+        CliApp ui = new CliApp(hex);
         ui.iniciar(args);
     }
 }
