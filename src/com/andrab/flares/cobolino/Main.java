@@ -35,10 +35,10 @@ class CliApp {
                 } else if (functionName.equals("getTaxRateForState")) {
                     String state = args[++donde];
                     reporte = String.format("La tasa de impuesto es %.2f por ciento.", hex.getTaxRateForState(state));
-                } else if (functionName.equals("calculatePriceWithTax")) {
+                } else if (functionName.equals("calculatePriceWithTaxRate")) {
                     int precio = Integer.parseInt(args[++donde]);
                     String state = args[++donde];
-                    reporte = String.format("El precio con la tasa de impuesto es %.2f dólares", hex.calculatePriceWithTax(precio, state));
+                    reporte = String.format("El precio con la tasa de impuesto es %.2f dólares", hex.calculatePriceWithTaxRate(precio, state));
                 }
             }
 
@@ -64,7 +64,7 @@ class CliApp {
 public class Main {
     public static void main(String... args) {
         PriceMaker hex = new PriceMaker();
-        hex.setTaxStore(new InMemoryTaxStore());
+        hex.setTaxRateStore(new InMemoryTaxRateStore());
 
         CliApp ui = new CliApp(hex);
         ui.iniciar(args);

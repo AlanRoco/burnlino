@@ -1,0 +1,4 @@
+#echo "Packaging up burnlino.jar.."
+cd out/production/cobolin
+jar cf burnlino.jar . && mv burnlino.jar ../../../burnlino.jar
+cd ../../..

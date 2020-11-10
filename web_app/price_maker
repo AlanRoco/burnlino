@@ -1,0 +1,34 @@
+#!/usr/bin/env jruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "burnlino.jar"))
+BURNLINO = Java::ComAndrabFlaresCobolino
+ForGettingTaxRates = BURNLINO::ForGettingTaxRates
+PriceMaker = BURNLINO::PriceMaker
+
+require './result'
+require './store'
+require './web_app'
+require 'sinatra'
+
+hexagon = PriceMaker.new
+hexagon.tax_rate_store = Store.new
+
+app = WebApp.new(hexagon)
+
+get '/echo/:value' do |value|
+  value = app.echo_value(value)
+  @view = Result::Money.new(value)
+  erb :decir
+end
+
+get '/tax_rate/:state' do |name|
+  tax_rate = app.get_tax_rate_for_state(name)
+  @view = Result::StateTaxRate.new(name: name, tax_rate: tax_rate)
+  erb :decir
+end
+
+get '/price_with_tax_rate/:price/:state' do |price, state|
+  price_with_tax = app.price_with_tax_rate(price, state)
+  @view = Result::PriceWithStateTaxRate.new(price: price_with_tax, state: state)
+  erb :decir
+end

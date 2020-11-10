@@ -1,0 +1,11 @@
+bin/generate_jar
+
+#echo "Running programs.."
+
+export SOURCES=".:/Users/andrasMAMA/Code/cobolin/burnlino.jar"
+export PROGRAM="com.andrab.flares.cobolino.Main";
+
+java -cp $SOURCES $PROGRAM echoValue 500
+java -cp $SOURCES $PROGRAM getTaxRateForState FL
+java -cp $SOURCES $PROGRAM calculatePriceWithTaxRate 50 FL
+

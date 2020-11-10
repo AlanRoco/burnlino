@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class FileTaxStore implements ForGettingTaxRates {
+class FileTaxRateStore implements ForGettingTaxRates {
 
     private Map<String, Double> states = new HashMap<String, Double>();
 
-    FileTaxStore() {
+    FileTaxRateStore() {
         populateStateTaxRates();
     }
 

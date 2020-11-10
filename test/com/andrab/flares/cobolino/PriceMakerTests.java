@@ -17,7 +17,7 @@ public class PriceMakerTests {
     @Test
     public void ShouldGive6PercentForFlorida() {
         PriceMaker app = new PriceMaker();
-        app.setTaxStore(new InMemoryTaxStore());
+        app.setTaxRateStore(new InMemoryTaxRateStore());
 
         double tax = app.getTaxRateForState("FL");
         assertThat(String.format("%.2f", tax), is(equalTo("6.85")));
@@ -26,18 +26,18 @@ public class PriceMakerTests {
     @Test
     public void ShouldAddTaxToValue() {
         PriceMaker app = new PriceMaker();
-        app.setTaxStore(new InMemoryTaxStore());
+        app.setTaxRateStore(new InMemoryTaxRateStore());
 
-        double price = app.calculatePriceWithTax(100, "FL");
+        double price = app.calculatePriceWithTaxRate(100, "FL");
         assertThat(String.format("%.2f", price), is(equalTo("106.85")));
     }
 
     @Test
     public void ShouldPullTaxRateFromFile() {
         PriceMaker app = new PriceMaker();
-        app.setTaxStore(new FileTaxStore());
+        app.setTaxRateStore(new FileTaxRateStore());
 
-        double price = app.calculatePriceWithTax(100, "FL");
+        double price = app.calculatePriceWithTaxRate(100, "FL");
         assertThat(String.format("%.2f", price), is(equalTo("106.85")));
     }
 

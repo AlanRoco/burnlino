@@ -1,3 +1,5 @@
 .idea
 out
 *.iml
+jruby-9.2.13.0/
+burnlino.jar
