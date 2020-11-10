@@ -6,10 +6,6 @@ interface ForCalculatingPrices {
     double calculatePriceWithTax(int value, String state);
 }
 
-interface ForGettingTaxRates {
-    double taxRateForState(String state);
-}
-
 public class PriceMaker implements ForCalculatingPrices {
 
     private ForGettingTaxRates taxStore;

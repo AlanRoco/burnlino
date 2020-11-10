@@ -26,7 +26,7 @@ class CliApp {
         String reporte = "";
 
         while (hayMas()) {
-            if (donde == 1) {
+            if (donde == 0) {
                 String functionName = args[donde];
 
                 if (functionName.equals("echoValue")) {
@@ -49,17 +49,16 @@ class CliApp {
     }
 
     private boolean hayMas() {
-        if (args.length <= donde)
+        if (args.length <= donde || donde >= args.length)
             return false;
-        if (donde >= args.length)
-            return false;
+
         return true;
     }
 
     private static PrintStream stream = System.out;
 
     private String[] args;
-    private int donde = 1;
+    private int donde = 0;
 }
 
 public class Main {

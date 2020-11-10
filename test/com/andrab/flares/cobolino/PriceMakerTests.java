@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import org.junit.Test;
 
 public class PriceMakerTests {
+
     @Test
     public void ShouldEchoValue() {
         PriceMaker app = new PriceMaker();
@@ -30,4 +31,14 @@ public class PriceMakerTests {
         double price = app.calculatePriceWithTax(100, "FL");
         assertThat(String.format("%.2f", price), is(equalTo("106.85")));
     }
+
+    @Test
+    public void ShouldPullTaxRateFromFile() {
+        PriceMaker app = new PriceMaker();
+        app.setTaxStore(new FileTaxStore());
+
+        double price = app.calculatePriceWithTax(100, "FL");
+        assertThat(String.format("%.2f", price), is(equalTo("106.85")));
+    }
+
 }
